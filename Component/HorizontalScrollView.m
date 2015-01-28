@@ -91,8 +91,6 @@
     @synchronized(self)
     {
         HorizontalView *view = self.horizontalViewAtIndex(self,i);
-        [view reachIndex:i];
-        view.frame = CGRectMake([self originx:i], 0, [self sizewidth:i], self.frame.size.height);
         [self addSubview:view];
         if (isTop) {
             [_visibleViewsArray insertObject:view atIndex:0];
@@ -111,7 +109,15 @@
     return [[[self.viewsDescriptionArray objectAtIndex:i] objectForKey:@"size.width"] floatValue];
 }
 
--(HorizontalView *)deqreuseView:(NSString *)identity
+-(CGRect)viewRectAtIndex:(NSInteger)index
+{
+    CGFloat originx = [self originx:index];
+    CGFloat width = [[[self.viewsDescriptionArray objectAtIndex:index] objectForKey:@"size.width"] floatValue];
+    CGFloat height = self.frame.size.height;
+    return CGRectMake(originx, 0, width, height);
+}
+
+-(HorizontalView *)deqreuseViewAtIndex:(NSInteger)index identity:(NSString *)identity
 {
     @synchronized(self)
     {
@@ -119,6 +125,7 @@
         for (HorizontalView * view in self.reuseViewsArray) {
             if ([identity isEqualToString:(NSString *)view.identity]) {
                 temp = view;
+                [temp resize:self index:index];
                 [_reuseViewsArray removeObject:view];
                 break;
             }

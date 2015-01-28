@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class HorizontalScrollView;
 @interface HorizontalView : UIView
 @property (nonatomic,assign,readonly,getter=getIdentity)NSString * identity;
 @property (nonatomic,assign,readonly)NSInteger index;
--(void)reachIndex:(NSInteger)indt;
-- (instancetype)initWithIdentity:(NSString *)idetity;
+-(void)resize:(HorizontalScrollView *)scroll index:(NSInteger)index;
+- (instancetype)initWithHorizontalScroll:(HorizontalScrollView *)horizontalScroll index:(NSInteger)index Identity:(NSString *)idetity;
 @end

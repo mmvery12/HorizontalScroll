@@ -7,20 +7,27 @@
 //
 
 #import "HorizontalView.h"
-
+#import "HorizontalScrollView.h"
 @interface HorizontalView ()
 @property (nonatomic,retain)NSString * tidentity;
 @end
 
 @implementation HorizontalView
 @synthesize identity = _identity;
-- (instancetype)initWithIdentity:(NSString *)idetity
+- (instancetype)initWithHorizontalScroll:(HorizontalScrollView *)horizontalScroll index:(NSInteger)index Identity:(NSString *)idetity
 {
     self = [super init];
     if (self) {
+        [self resize:horizontalScroll index:index];
         self.identity = idetity;
     }
     return self;
+}
+
+-(void)resize:(HorizontalScrollView *)horizontalScroll index:(NSInteger)index
+{
+    self.frame = [horizontalScroll viewRectAtIndex:index];
+    _index = index;
 }
 
 -(void)setIdentity:(NSString *)identity
@@ -36,10 +43,5 @@
 -(void)willMoveToSuperview:(UIView *)newSuperview
 {
     [super willMoveToSuperview:newSuperview];
-}
-
--(void)reachIndex:(NSInteger)indt
-{
-    _index = indt;
 }
 @end

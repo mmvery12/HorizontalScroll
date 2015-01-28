@@ -18,6 +18,7 @@ typedef NSInteger (^HorizontalCount)(HorizontalScrollView *scroll);
 @property (nonatomic,copy)HorizontalViewAtIndex horizontalViewAtIndex;
 @property (nonatomic,copy)HorizontalCount horzontalCount;
 @property (nonatomic,copy)HorizontalWidthAtIndex horizontalWidthAtIndex;
+-(CGRect)viewRectAtIndex:(NSInteger)index;
 - (id)initHorizontalScrollViewWithFrame:(CGRect)frame;
--(HorizontalView *)deqreuseView:(NSString *)identity;
+-(HorizontalView *)deqreuseViewAtIndex:(NSInteger)index identity:(NSString *)identity;
 @end
