@@ -9,15 +9,22 @@
 #import <UIKit/UIKit.h>
 #import "SysAsseist.h"
 #import "HorizontalView.h"
-
 @class HorizontalScrollView;
+@protocol HorizontalDelegate <NSObject>
+-(void)horizontalViewWillDismiss:(HorizontalView *)view index:(NSInteger)index;
+-(void)horizontalViewWillDisplay:(HorizontalView *)view index:(NSInteger)index;
+@end
+
 typedef HorizontalView * (^HorizontalViewAtIndex) (HorizontalScrollView *scroll,NSInteger index);
 typedef CGFloat (^HorizontalWidthAtIndex) (HorizontalScrollView *scroll,NSInteger index);
 typedef NSInteger (^HorizontalCount)(HorizontalScrollView *scroll);
+typedef void (^HorizontalViewWillDismiss)(HorizontalView *view,NSInteger index);
 @interface HorizontalScrollView : UIScrollView<UIScrollViewDelegate>
+@property (nonatomic,assign)id<HorizontalDelegate> horidelegate;
 @property (nonatomic,copy)HorizontalViewAtIndex horizontalViewAtIndex;
 @property (nonatomic,copy)HorizontalCount horzontalCount;
 @property (nonatomic,copy)HorizontalWidthAtIndex horizontalWidthAtIndex;
+
 -(CGRect)viewRectAtIndex:(NSInteger)index;
 - (id)initHorizontalScrollViewWithFrame:(CGRect)frame;
 -(HorizontalView *)deqreuseViewAtIndex:(NSInteger)index identity:(NSString *)identity;

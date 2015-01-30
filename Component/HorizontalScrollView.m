@@ -7,8 +7,11 @@
 //
 
 #import "HorizontalScrollView.h"
-
+#import <objc/runtime.h>
 @interface HorizontalScrollView ()
+{
+    Class objIsa;
+}
 @property (nonatomic,assign)NSInteger nowVisibleTopViewIndex;
 @property (nonatomic,DEF_STRONG)NSMutableArray * visibleViewsArray;
 @property (nonatomic,DEF_STRONG)NSMutableArray * reuseViewsArray;
@@ -67,6 +70,12 @@
     }
 }
 
+-(void)setHoridelegate:(id<HorizontalDelegate>)horidelegate
+{
+    objIsa = object_getClass(horidelegate);
+    _horidelegate = horidelegate;
+}
+
 -(NSInteger)arriveCount
 {
     return self.horzontalCount(self);
@@ -91,6 +100,8 @@
     @synchronized(self)
     {
         HorizontalView *view = self.horizontalViewAtIndex(self,i);
+        if (_horidelegate && objIsa == object_getClass(_horidelegate) && [_horidelegate respondsToSelector:@selector(horizontalViewWillDisplay:index:)])
+            [_horidelegate horizontalViewWillDisplay:view index:i];
         [self addSubview:view];
         if (isTop) {
             [_visibleViewsArray insertObject:view atIndex:0];
@@ -143,6 +154,8 @@
         HorizontalView *view = (id)[_visibleViewsArray objectAtIndex:i];
         [_reuseViewsArray addObject:view];
         [_visibleViewsArray removeObject:view];
+        if (_horidelegate && objIsa == object_getClass(_horidelegate) && [_horidelegate respondsToSelector:@selector(horizontalViewWillDismiss:index:)])
+            [_horidelegate horizontalViewWillDismiss:view index:i];
         [view removeFromSuperview];
     }
 }
