@@ -20,10 +20,10 @@ typedef CGFloat (^HorizontalWidthAtIndex) (HorizontalScrollView *scroll,NSIntege
 typedef NSInteger (^HorizontalCount)(HorizontalScrollView *scroll);
 typedef void (^HorizontalViewWillDismiss)(HorizontalView *view,NSInteger index);
 @interface HorizontalScrollView : UIScrollView<UIScrollViewDelegate>
-@property (nonatomic,assign)id<HorizontalDelegate> horidelegate;
-@property (nonatomic,copy)HorizontalViewAtIndex horizontalViewAtIndex;
-@property (nonatomic,copy)HorizontalCount horzontalCount;
-@property (nonatomic,copy)HorizontalWidthAtIndex horizontalWidthAtIndex;
+@property (nonatomic,assign)id<HorizontalDelegate> horidelegate; //require
+@property (nonatomic,copy)HorizontalViewAtIndex horizontalViewAtIndex; //require
+@property (nonatomic,copy)HorizontalCount horzontalCount; //require
+@property (nonatomic,copy)HorizontalWidthAtIndex horizontalWidthAtIndex; //require
 
 -(CGRect)viewRectAtIndex:(NSInteger)index;
 - (id)initHorizontalScrollViewWithFrame:(CGRect)frame;
