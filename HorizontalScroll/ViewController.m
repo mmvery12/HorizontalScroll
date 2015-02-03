@@ -21,9 +21,9 @@
     hori.layer.borderWidth = 1.f;
     hori.horizontalViewAtIndex = ^HorizontalView * (HorizontalScrollView *scroll,NSInteger index){
         static NSString *identity = @"identity";
-        HorizontalView *view = [scroll deqreuseView:identity];
+        HorizontalView *view = [scroll deqreuseViewAtIndex:index identity:identity];
         if (!view) {
-            view = [[HorizontalView alloc] initWithIdentity:identity];
+            view = [[HorizontalView alloc] initWithHorizontalScroll:scroll index:index Identity:identity];
             view.layer.borderColor = [UIColor greenColor].CGColor;
             view.layer.borderWidth = 2.f;
         }
